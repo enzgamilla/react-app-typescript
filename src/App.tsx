@@ -1,9 +1,10 @@
 import "bootstrap/dist/css/bootstrap.css";
+import ListGroup from "./components/ListGroup/ListGroup";
 
 function App() {
   return (
     <div>
-      <h2>Hello World</h2>
+      <ListGroup />
     </div>
   );
 }

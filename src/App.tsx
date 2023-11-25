@@ -1,6 +1,8 @@
 import "bootstrap/dist/css/bootstrap.css";
 // import ListGroup from "./components/ListGroup/ListGroup";
 import Button from "./components/Button/Button";
+import Alert from "./components/Alert/Alert";
+import { useState } from "react";
 
 function App() {
   // const listOfState = [
@@ -14,10 +16,17 @@ function App() {
   //   "Al Ain",
   // ];
 
+  const [show, setShow] = useState(true);
+
+  function handleClick() {
+    return show ? false : true;
+  }
+
   return (
     <div className="container">
       {/* <ListGroup listState={listOfState} /> */}
-      <Button>Click me!</Button>
+      {!show && <Alert onClick={() => setShow(handleClick())} />}
+      <Button onClick={() => setShow(handleClick())}>Show Alert</Button>
     </div>
   );
 }

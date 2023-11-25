@@ -86,18 +86,40 @@ function App() {
   //   );
   // };
 
-  const [cart, setCart] = useState([
-    { id: 1, title: "Product 1", price: 43 },
-    { id: 2, title: "Product 2", price: 44 },
-    { id: 3, title: "Product 3", price: 46 },
-  ]);
+  const [cart, setCart] = useState({
+    discount: 0.1,
+    items: [
+      { id: 1, title: "Product 1", quantity: 1, price: 5 },
+      { id: 2, title: "Product 2", quantity: 1, price: 2 },
+      { id: 3, title: "Product 3", quantity: 1, price: 1 },
+    ],
+  });
+
+  const cartitems = cart.items;
 
   const handleOnClear = () => {
-    setCart([]);
+    setCart({ ...cart, items: [] });
   };
 
   const handleRemoveItem = (id: number) => {
-    setCart(cart.filter((item) => item.id !== id));
+    const item = cartitems.filter((item) => item.id !== id);
+    setCart({ ...cart, items: item });
+  };
+  const handleAddQuantity = (id: number) => {
+    setCart({
+      ...cart,
+      items: cart.items.map((item) =>
+        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+      ),
+    });
+  };
+  const handleMinusQuantity = (id: number) => {
+    setCart({
+      ...cart,
+      items: cart.items.map((item) =>
+        item.id === id ? { ...item, quantity: item.quantity - 1 } : item
+      ),
+    });
   };
 
   return (
@@ -114,11 +136,13 @@ function App() {
       ))} */}
 
       {/* <Button onClick={handleClick}>update me</Button> */}
-      <NavBar cartItemsCount={cart.length} />
+      <NavBar cartItemsCount={cart.items.length} />
       <CartItems
-        cartItems={cart}
+        cartItems={cartitems}
         handleClear={handleOnClear}
         removeItem={(id: number) => handleRemoveItem(id)}
+        addQuantity={(id: number) => handleAddQuantity(id)}
+        minusQuantity={(id: number) => handleMinusQuantity(id)}
       />
     </div>
   );
